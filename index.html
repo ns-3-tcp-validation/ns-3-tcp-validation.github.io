@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <title>Testing and Alignment of ns-3 TCP with Linux TCP</title>
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-97221023-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</head>
+<body>
+  <nav class="vintage lighten-1" role="navigation">
+    <div class="nav-wrapper container"><a href="https://summerofcode.withgoogle.com"><center><font size = "+1">Google Summer of Code 2019</font></center></a>
+
+      <ul id="nav-mobile" class="side-nav">
+        <li><a href="#">Navbar Link</a></li>
+      </ul>
+      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+    </div>
+  </nav>
+  <div class="section no-pad-bot" id="index-banner">
+    <div class="container">
+      <br>
+      <h4 class="header center black-text">Testing and Alignment of ns-3 TCP with Linux TCP</h4>
+      <div class="row center">
+        <h6 class="header col s12 light"><font color="vintage">Student:</font> Apoorva Bhargava<br><br> <font color="vintage">Mentor:</font> Tom Henderson, Vivek Jain<br><br> <font color="vintage">Organization:</font> The ns-3 Network Simulator Project</h6>
+      </div> 
+      <h5><font color="vintage">Project Overview</font></h5>
+      <p style="text-align:justify">As a part of GSoC 2019, I developed a framework in ns-3 DCE to validate the alignment of ns-3 TCP against Linux TCP. ns-3 DCE is a framework built over ns-3 which allows the users to use kernel space protocols and applications inside the simulator. Leveraging this feature of DCE, I first validated the ns-3 implementation of TCP New Reno congestion control algorithm with Linux. The ns-3 implementation of TCP New Reno follows the <a href="https://tools.ietf.org/html/rfc2581">RFC 2581</a> standards which is different from Linux implementation of TCP New Reno. The main difference between the implementation of TCP New Reno in ns-3 and Linux was that in slow start and congestion avoidance phases, presence and absence of delayed acknowledgment does not alter the window growth. Also, in the congestion avoidance phase, the arithmetic for counting the number of segments acked and deciding when to increment the congestion window was different. So, I created a new module for Linux Reno in ns-3 with necessary examples, tests, and documentation.</p>
+
+      <p style="text-align:justify">The next important feature of TCP that was validated was the Proportional Rate Reduction (PRR) recovery algorithm. PRR is the defacto recovery algorithm in Linux kernel. Also, the default congestion control in Linux kernel is TCP CUBIC. So, validating the alignment of PRR and CUBIC with Linux is important for the ns-3 community as these are the most widely used TCP algorithms in the real world. Also, producing results that show the ns-3 implementation of TCP is completely aligned with Linux kernel will give users the confidence that the simulator gives realistic results.</p>
+
+      <p style="text-align:justify">I first validated the alignment of ns-3 PRR with Linux PRR and found out that the ns-3 implementation of PRR is different from Linux. ns-3 follows RFC standards whereas Linux implementation was different from RFC. So, I created a new module for Linux PRR in ns-3 with validation results, tests, and documentation. Next, I validated the alignment of ns-3 implementation of TCP CUBIC with Linux. The ns-3 implementation of CUBIC is close to Linux kernel but not completely aligned. The observed differences are documented and the reasons for those differences are partially resolved. More work is required for the complete alignment of TCP CUBIC.</p>
+
+      <h5><font color="vintage">Deliverables</font></h5>
+      <p style="text-align:justify">This project was split into three phases and at the end of each phase, a TCP feature in ns-3 was aligned with Linux. Also, implemented new modules for providing Linux like TCP implementation in ns-3. My patch for Linux Reno is submitted as a merge request in ns-3-dev and patch for Linux PRR is also ready. CUBIC is in the testing phase.</p>
+
+    </div>
+  </div>
+
+
+  <div class="container">
+    <div class="section">
+
+      <!--   Icon Section   -->
+      <div class="row">
+        <div class="col s12 m4">
+          <div class="icon-block">
+            <h2 class="center light-green-text"><i class="material-icons">assignment_turned_in</i></h2>
+            <h5 class="center"><font color="vintage">Phase 1</font><br>Implementation and Testing of Linux Reno in ns-3</h5>
+
+            <p class="light" style="text-align:center">Implemented a new TCP variant called Linux Reno in ns-3 with documentation of valiadtion results and differences from RFC-complaint ns-3 New Reno. Also provided a test suite and example program for users to contrast the differences in congestion window of ns-3 New Reno and Linux Reno</p>
+
+            <div class="row center">
+            <a href="https://gitlab.com/apoorvabhargava/ns-3-dev/tree/LinuxRenoMergeRequest" id="download-button" class="btn-large waves-effect waves-light maroon">Download</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col s12 m4">
+          <div class="icon-block">
+            <h2 class="center light-green-text"><i class="material-icons">assignment_turned_in</i></h2>
+            <h5 class="center"><font color="vintage">Phase 2</font><br>Implementation and Testing of Linux PRR in ns-3</h5>
+
+            <p class="light" style="text-align:center">Implemented new recovery <br> algorithm called Linux PRR in ns-3 with the documentation of validation results and differences from RFC-complaint ns-3 PRR. A test suite and example program (same for Linux Reno and Linux PRR) was also provided.</p>
+
+            <div class="row center">
+            <a href="https://gitlab.com/apoorvabhargava/ns-3-dev/tree/LinuxPRRMergeRequest" id="download-button" class="btn-large waves-effect waves-light maroon">Download</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col s12 m4">
+          <div class="icon-block">
+            <h2 class="center light-green-text"><i class="material-icons">assignment_turned_in</i></h2>
+            <h5 class="center"><font color="vintage">Phase 3</font><br>Testing and Aligning ns-3 CUBIC with <br> Linux</h5>
+
+            <p class="light" style="text-align:center">Validated the alignment of ns-3 implementation of TCP Cubic with Linux using ns-3 Direct Code Execution (DCE). Documented the observed differences between ns-3 CUBIC and Linux CUBIC. Graphs after aligning these differences are close but not completely overlapping.</p>
+            <div class="row center">
+            <a href="https://gitlab.com/apoorvabhargava/tcp_testing_and_alignment" id="download-button" class="btn-large waves-effect waves-light maroon">Download</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="section">
+      <h6><font color="brown">Steps to build the code for Phase 1</font></h6>
+          <ol>
+            <li>Download ns-3-dev from above provided link</li>
+            <li>Configure ns-3-dev: ./waf configure --enable-tests --enable-examples</li>
+            <li>Build ns-3-dev: ./waf</li>
+            <li>To run the test suite: ./test.py --suite=tcp-linux-reno-test</li>
+            <li>Run the example program: ./waf --run "tcp-linux-reno --congControlVariant=TcpLinuxReno"</li>
+          </ol>
+      <h6><font color="brown">Steps to build the code for Phase 2</font></h6>
+          <ol>
+            <li>Download ns-3-dev from above provided link</li>
+            <li>Configure ns-3-dev: ./waf configure --enable-tests --enable-examples</li>
+            <li>Build ns-3-dev: ./waf</li>
+            <li>To run the test suite: ./test.py --suite=tcp-linux-prr-recovery-test</li>
+            <li>Run the example program: ./waf --run "tcp-linux-reno --recoveryType=TcpLinuxPrrRecovery"</li>
+          </ol>
+      <h6><font color="brown">Steps to build the code for Phase 3</font></h6>
+          <ol>
+            <li>Go to the above provided link.
+            <li>Follow the steps provided in README to reproduce the result.
+          </ol>
+
+      <h5><font color="vintage">Possible Extensions</font></h5>
+        <p style="text-align:justify">This project can be extended further as suggested below:</p>
+          <ol>
+            <li>Complete the alignment of ns-3 CUBIC with Linux CUBIC.</li>
+            <li>For this project separate example files and scripts in ns-3-dce were used for testing the alignment of ns-3 TCP against Linux TCP. It can be further automated to produce the results directly by running the example in DCE.</li>
+            <li>This project can be further extend to test other features of TCP like ECN, RACK, SACK etc.</li>
+          </ol>
+
+      <h5><font color="vintage">Online References</font></h5>
+        <p style="text-align:justify">More details about this project, source code and project wiki page are available on the links given below: </p>
+        
+        <div class="row center">
+        <a href="https://www.nsnam.org/wiki/GSOC2019TCPTestingAndAlignment" id="download-button" class="btn-large waves-effect waves-light maroon">Project Wiki</a>
+        <a href="https://gitlab.com/apoorvabhargava/ns-3-dev" id="download-button" class="btn-large waves-effect waves-light maroon">Source Code</a>
+
+        </div>
+    </div>
+  </div>
+
+  <footer class="page-footer vintage">
+    <div class="container">
+      <div class="row">
+        <div class="col l6 s12">
+          <h5 class="white-text">Acknowledgement</h5>
+          <p class="grey-text text-lighten-4">This project was funded by Google Summer of Code (GSoC) 2019. I would like to thank the ns-3 community for giving me this opportunity, and providing the much needed assistance in completing this project.</p>
+
+
+        </div>
+        <div class="col l3 s12">
+          <h5 class="white-text">People</h5>
+          <ul>
+            <li><a class="white-text" href="https://gitlab.com/apoorvabhargava">Apoorva Bhargava (Student)</a></li>
+            <li><a class="white-text" href="https://gitlab.com/tomhenderson">Tom Henderson (Mentor)</a></li>
+            <li><a class="white-text" href="https://gitlab.com/Vivek-anand-jain">Vivek Jain (Mentor)</a></li>
+          </ul>
+        </div>
+        <div class="col l3 s12">
+          <h5 class="white-text">Useful Links</h5>
+          <ul>
+            <li><a class="white-text" href="https://www.nsnam.org/wiki/GSOC2019TCPTestingAndAlignment">Project Wiki</a></li>
+            <li><a class="white-text" href="https://gitlab.com/apoorvabhargava/ns-3-dev">Source repository</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <div class="container">
+      <p><center>Made by <a class="orange-text text-lighten-3" href="http://materializecss.com">Materialize</a></center></p></div>
+      </div>
+    </div>
+  </footer>
+
+
+  <!--  Scripts-->
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="js/materialize.js"></script>
+  <script src="js/init.js"></script>
+
+  </body>
+</html>
